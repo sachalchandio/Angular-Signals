@@ -6,17 +6,22 @@ import { catchError, of } from 'rxjs';
 import { User } from './user';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
-
   // Inject the HttpClient service
   http = inject(HttpClient);
   userUrl = 'https://jsonplaceholder.typicode.com/users';
 
   // Retrieve the users from the API using RxJS
-  
+  users$ = this.http.get<User[]>(this.userUrl);
   // Expose the state as a signal
+  users = toSignal(this.users$, { initialValue: [] as User[] });
+
+  selectedUserId = signal<number>(0);
 
   // Set the selected user
+  setSelectedUser(id: number) {
+    this.selectedUserId.set(id);
+  }
 }

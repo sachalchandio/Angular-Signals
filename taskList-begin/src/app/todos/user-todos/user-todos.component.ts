@@ -8,7 +8,7 @@ import { ToDo } from '../todo';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './user-todos.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserTodosComponent {
   // Inject the UserService
@@ -18,7 +18,10 @@ export class UserTodosComponent {
   pageTitle = 'User Tasks';
 
   // Expose the state as signals
+  userTasks = this.todoService.userTasks;
 
   // Mark as completed
-
+  markComplete(task: ToDo) {
+    this.todoService.markComplete(task);
+  }
 }
